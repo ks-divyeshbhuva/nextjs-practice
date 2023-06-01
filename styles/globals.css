@@ -29,8 +29,67 @@ body {
 h1 {
   font-size: 32px;
   font-weight: 700;
+  color: aquamarine;
+}
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: palegoldenrod;
+}
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: palegoldenrod;
+}
+.highlight-text {
+  color: aquamarine;
 }
 
 .paragraph {
   font-size: 18px;
+}
+
+.movie-poster {
+  width: 240px;
+}
+
+.button {
+  border: 1px solid aliceblue;
+  border-radius: 5px;
+  height: 28px;
+  padding: 0 10px;
+}
+.button:hover {
+  border-color: palegoldenrod;
+  color: palegoldenrod;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+.nav-links > *:hover {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  color: palegoldenrod;
+}
+
+.ssr-body {
+  padding: 10px 20px;
+}
+.marvelChar-info {
+  display: flex;
+  justify-content: space-between;
+}
+.marvelChar-otherinfo {
+  display: flex;
+  gap: 25px;
 }

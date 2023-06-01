@@ -1,6 +1,5 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { Url } from "url";
 
 export interface MovieModal {
   id: number;
@@ -16,7 +15,7 @@ export const getStaticProps: GetStaticProps<{
   const res = await fetch("https://6371fb0e025414c63702d396.mockapi.io/movies");
   const data = await res.json();
 
-  return { props: { data } };
+  return { props: { data }, revalidate: 10 };
 };
 
 export default function MovieList({
@@ -28,13 +27,14 @@ export default function MovieList({
     <div>
       <h1>Movies Page</h1>
       <br />
-      {data.map((elem, idx) => {
+      {MovieData.map((elem, idx) => {
         return (
           <div key={idx}>
-            <p className={`paragraph`}>
-              <Link href={`/movies/${elem.id}`}>{elem.name}</Link> - ⭐{" "}
-              {elem.rating}
-            </p>
+            <h3>
+              <Link href={`/movies/${elem.id}`}>{elem.name}</Link>
+            </h3>
+            <p>⭐ {elem.rating}</p>
+            <br />
           </div>
         );
       })}
