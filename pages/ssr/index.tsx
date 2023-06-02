@@ -11,6 +11,7 @@ export interface marvelCharacters {
   char_type: string;
 }
 
+// server side props -----------------------------------------------------------
 export const getServerSideProps: GetServerSideProps<{
   data: marvelCharacters[];
 }> = async () => {
@@ -26,7 +27,6 @@ function SsrIndex({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  console.log(data);
 
   return (
     <div>

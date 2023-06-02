@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Dancing_Script } from "next/font/google";
+import Head from "next/head";
 import { Router } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -26,8 +27,18 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <div className={dancingScript.className}>
-      {loading ? "Loading..." : <Component {...pageProps} />}
-    </div>
+    <>
+      <Head>
+        <title>My Next App</title>
+        <meta
+          name="description"
+          key="description"
+          content="News App in NextJS"
+        />
+      </Head>
+      <div className={dancingScript.className}>
+        {loading ? "Loading..." : <Component {...pageProps} />}
+      </div>
+    </>
   );
 }

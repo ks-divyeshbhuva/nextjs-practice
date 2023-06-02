@@ -1,43 +1,43 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { marvelCharacters } from ".";
 import { useRouter } from "next/router";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { ParsedUrlQuery } from "querystring";
 
 const marvelCharUrl = "https://6371fb0e025414c63702d396.mockapi.io/react_query";
 
-interface parameter extends Params {
-  category: string;
-}
-
-export const getServerSideProps: GetServerSideProps<
-  {
-    dynamicData: marvelCharacters[];
-  },
-  parameter
-> = async (context) => {
-  const { params } = context;
-  //   const type = params?.category;
-
-  const res = await fetch(`${marvelCharUrl}?char_type=${params?.category}`);
-  const dynamicData = await res.json();
-  return { props: { dynamicData } };
+type SsrPropsData = {
+  dynamicData: marvelCharacters[];
+  query: ParsedUrlQuery;
 };
 
-function Category({
-  dynamicData,
+// server side props -----------------------------------------------------------
+export const getServerSideProps: GetServerSideProps<{
+  data: SsrPropsData;
+}> = async (context) => {
+  const { query, res } = context;
+
+  res.setHeader("Set-Cookie", ["user=dev"]);
+
+  const response = await fetch(`${marvelCharUrl}?char_type=${query?.category}`);
+  const dynamicData = await response.json();
+  return { props: { data: { dynamicData, query } } };
+};
+
+// ui component ----------------------------------------------------------------
+function CategoryPage({
+  data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const char_type = router.query.category;
 
-  console.log(dynamicData, char_type);
+  const { dynamicData: dt, query } = data;
 
   return (
     <div>
       <h3>
-        Showing result for <span className="highlight-text">{char_type}</span>{" "}
-        type characters
+        Showing result for
+        <span className="highlight-text">{query.category}</span> type characters
       </h3>
-      {dynamicData?.map((elem) => {
+      {dt?.map((elem) => {
         return (
           <div key={elem.id} className="ssr-body">
             <h3 className="paragraph">{elem.name}</h3>
@@ -60,4 +60,4 @@ function Category({
   );
 }
 
-export default Category;
+export default CategoryPage;
