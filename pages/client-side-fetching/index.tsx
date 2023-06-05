@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserDto } from "../../dto/client-side-fetch-Dto/userDto";
+import { UserDto } from "@/dto/client-side-fetch-Dto/userDto";
 
 const ClientSideFetching = () => {
   const [userList, setUserList] = useState<null | UserDto[]>(null);
